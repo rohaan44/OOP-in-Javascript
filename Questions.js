@@ -34,6 +34,3 @@
 // a.add(b)
 
 
-class 
-
-
