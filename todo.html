@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Todo App</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    #todoApp {
+      width: 300px;
+      padding: 20px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+    input {
+      width: 100%;
+      margin-bottom: 10px;
+      padding: 10px;
+      font-size: 16px;
+    }
+
+    ul {
+      list-style-type: none;
+      padding: 0;
+    }
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px;
+      border-bottom: 1px solid #eee;
+    }
+
+    button {
+      cursor: pointer;
+      background-color: #f7931e;
+      color: #fff;
+      border: none;
+      padding: 8px;
+      border-radius: 3px;
+    }
+  </style>
+</head>
+<body>
+
+<div id="todoApp">
+  <input type="text" id="taskInput" placeholder="Add a new task">
+  <ul id="taskList"></ul>
+</div>
+
+<script>
+  class Todo {
+    constructor() {
+      this.tasks = [];
+    }
+
+    addTask(task) {
+      this.tasks.push(task);
+    }
+
+    removeTask(index) {
+      this.tasks.splice(index, 1);
+    }
+
+    renderTasks() {
+      const taskListElement = document.getElementById('taskList');
+      taskListElement.innerHTML = '';
+
+      this.tasks.forEach((task, index) => {
+        const listItem = document.createElement('li');
+        listItem.innerHTML = `
+          <span>${task}</span>
+          <button onclick="todoApp.removeTask(${index})">Remove</button>
+        `;
+        taskListElement.appendChild(listItem);
+      });
+    }
+  }
+
+  const todoApp = new Todo();
+
+  function addTask() {
+    const taskInput = document.getElementById('taskInput');
+    const taskValue = taskInput.value.trim();
+
+    if (taskValue !== '') {
+      todoApp.addTask(taskValue);
+      todoApp.renderTasks();
+      taskInput.value = '';
+    }
+  }
+
+  document.getElementById('taskInput').addEventListener('keyup', function(event) {
+    if (event.key === 'Enter') {
+      addTask();
+    }
+  });
+</script>
+
+</body>
+</html>
